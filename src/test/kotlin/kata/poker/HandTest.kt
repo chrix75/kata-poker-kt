@@ -3,7 +3,10 @@ package kata.poker
 import kata.poker.ranking.HighCardRanking
 import kata.poker.ranking.PairCardRanking
 import kata.poker.ranking.TwoPairsCardRanking
+import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -45,5 +48,17 @@ class HandTest {
         val ranking = TwoPairsCardRanking().find(hand)
         assertNotNull(ranking)
         assertEquals(JACK_VALUE, ranking.highestCardValue)
+    }
+
+    @Test
+    internal fun `too many cards`() {
+        Assertions.assertThrows(Exception::class.java) {
+            Hand().with(Card(10, Suit.SPADE))
+                .with(JackCard(Suit.CLUB))
+                .with(Card(10, Suit.DIAMOND))
+                .with(KingCard(Suit.CLUB))
+                .with(JackCard(Suit.HEART))
+                .with(QueenCard(Suit.HEART))
+        }
     }
 }
