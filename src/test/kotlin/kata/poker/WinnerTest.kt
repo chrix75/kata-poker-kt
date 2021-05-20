@@ -18,7 +18,7 @@ class WinnerTest {
     }
 
     @Test
-    internal fun pairBeatsHigCard() {
+    internal fun `pair beats higCard`() {
         val highCardHand = Hand().with(Card(10, Suit.SPADE))
             .with(JackCard(Suit.CLUB))
             .with(Card(2, Suit.DIAMOND))
@@ -36,7 +36,7 @@ class WinnerTest {
     }
 
     @Test
-    internal fun theBestPairWins() {
+    internal fun `everyone has a pair, the strongest card wins`() {
         val acePairCardHand = Hand().with(Card(10, Suit.SPADE))
             .with(JackCard(Suit.CLUB))
             .with(AceCard(Suit.DIAMOND))

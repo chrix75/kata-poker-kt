@@ -9,7 +9,7 @@ import kotlin.test.assertNotNull
 
 class HandTest {
     @Test
-    internal fun findHighCard() {
+    internal fun `find high card`() {
         val hand = Hand().with(Card(10, Suit.SPADE))
             .with(JackCard(Suit.CLUB))
             .with(Card(2, Suit.DIAMOND))
@@ -22,7 +22,7 @@ class HandTest {
     }
 
     @Test
-    internal fun findOnePair() {
+    internal fun `find one pair`() {
         val hand = Hand().with(Card(10, Suit.SPADE))
             .with(JackCard(Suit.CLUB))
             .with(Card(10, Suit.DIAMOND))
@@ -35,7 +35,7 @@ class HandTest {
     }
 
     @Test
-    internal fun findTwoPairs() {
+    internal fun `find two pairs`() {
         val hand = Hand().with(Card(10, Suit.SPADE))
             .with(JackCard(Suit.CLUB))
             .with(Card(10, Suit.DIAMOND))
