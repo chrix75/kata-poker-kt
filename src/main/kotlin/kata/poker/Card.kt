@@ -19,8 +19,6 @@ open class Card(val value: Int, private val suit: Suit) {
     override fun equals(other: Any?): Boolean {
         return other != null && other is Card && other.value == value && other.suit == suit
     }
-
-    fun compare(card: Card) = card.value - value
 }
 
 class JackCard(suit: Suit) : Card(JACK_VALUE, suit)

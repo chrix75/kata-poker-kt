@@ -2,8 +2,8 @@ package kata.poker.ranking
 
 import kata.poker.Hand
 
-class TwoPairsCardRanking : CardRanking {
-    override fun find(hand: Hand): Ranking? {
+class TwoPairsCardRanking : CardRanking(20) {
+    override fun rankedHand(hand: Hand): RankedHand? {
         val pairs = cardValueOccurrences(hand).filter { entry -> entry.value == 2 }
             .map { entry -> entry.key }
 
@@ -11,7 +11,8 @@ class TwoPairsCardRanking : CardRanking {
             return null
         }
 
-        return Ranking(pairs.maxOrNull()!!)
+        val others = hand.cards.filterNot { pairs.contains(it.value) }.map { it.value }
+        return RankedTwoPairs(level, pairs, others)
     }
 
     private fun cardValueOccurrences(hand: Hand): Map<Int, Int> {

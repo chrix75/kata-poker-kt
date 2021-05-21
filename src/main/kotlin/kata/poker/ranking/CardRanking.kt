@@ -2,6 +2,6 @@ package kata.poker.ranking
 
 import kata.poker.Hand
 
-interface CardRanking {
-    fun find(hand: Hand) : Ranking?
+abstract class CardRanking(val level: Int) {
+    abstract fun rankedHand(hand: Hand): RankedHand?
 }

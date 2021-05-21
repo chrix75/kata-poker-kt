@@ -1,11 +1,9 @@
 package kata.poker
 
-import kata.poker.ranking.HighCardRanking
-import kata.poker.ranking.PairCardRanking
-import kata.poker.ranking.TwoPairsCardRanking
+import kata.poker.ranking.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 class HandTest {
@@ -17,9 +15,9 @@ class HandTest {
             .with(KingCard(Suit.CLUB))
             .with(Card(7, Suit.HEART))
 
-        val ranking = HighCardRanking().find(hand)
-        assertNotNull(ranking)
-        assertEquals(KING_VALUE, ranking.highestCardValue)
+        val rankedHand = HighCardRanking().rankedHand(hand)
+        assertNotNull(rankedHand)
+        assertIs<RankedHighCard>(rankedHand)
     }
 
     @Test
@@ -30,9 +28,9 @@ class HandTest {
             .with(KingCard(Suit.CLUB))
             .with(Card(7, Suit.HEART))
 
-        val ranking = PairCardRanking().find(hand)
-        assertNotNull(ranking)
-        assertEquals(10, ranking.highestCardValue)
+        val rankedHand = PairCardRanking().rankedHand(hand)
+        assertNotNull(rankedHand)
+        assertIs<RankedPair>(rankedHand)
     }
 
     @Test
@@ -43,9 +41,9 @@ class HandTest {
             .with(KingCard(Suit.CLUB))
             .with(JackCard(Suit.HEART))
 
-        val ranking = TwoPairsCardRanking().find(hand)
-        assertNotNull(ranking)
-        assertEquals(JACK_VALUE, ranking.highestCardValue)
+        val rankedHand = TwoPairsCardRanking().rankedHand(hand)
+        assertNotNull(rankedHand)
+        assertIs<RankedTwoPairs>(rankedHand)
     }
 
     @Test

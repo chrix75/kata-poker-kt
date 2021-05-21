@@ -71,4 +71,22 @@ class WinnerTest {
         val referee = Referee(cardRankings)
         assertEquals(twoPairsCardHand, referee.chosenWinner(twoPairsCardHand, onePairCardHand))
     }
+
+    @Test
+    internal fun `a strongest card wins`() {
+        val myHand = Hand().with(Card(3, SPADE))
+            .with(Card(5, CLUB))
+            .with(Card(6, HEART))
+            .with(JackCard(DIAMOND))
+            .with(AceCard(DIAMOND))
+
+        val adverse = Hand().with(Card(2, SPADE))
+            .with(Card(5, DIAMOND))
+            .with(Card(6, CLUB))
+            .with(JackCard(HEART))
+            .with(AceCard(CLUB))
+
+        val referee = Referee(cardRankings)
+        assertEquals(myHand, referee.chosenWinner(myHand, adverse))
+    }
 }
