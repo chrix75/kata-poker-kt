@@ -2,19 +2,19 @@ package kata.poker.ranking
 
 import kata.poker.Hand
 import kata.poker.ranking.randkedhand.RankedHand
-import kata.poker.ranking.randkedhand.RankedPair
+import kata.poker.ranking.randkedhand.RankedThreeOfKind
 
-class PairCardRanking : CardRanking(10) {
+class ThreeOfKindCardRanking : CardRanking(30) {
     override fun rankedHand(hand: Hand): RankedHand? {
-        val pairs = cardValueOccurrences(hand).filter { entry -> entry.value == 2 }
+        val group = cardValueOccurrences(hand).filter { entry -> entry.value == 3 }
             .map { entry -> entry.key }
 
-        if (pairs.size != 1) {
+        if (group.size != 1) {
             return null
         }
 
-        val others = hand.cards.filter { it.value != pairs[0] }.map { it.value }
-        return RankedPair(level, pairs[0], others)
+        val others = hand.cards.filter { it.value != group[0] }.map { it.value }
+        return RankedThreeOfKind(level, group[0], others)
     }
 
     private fun cardValueOccurrences(hand: Hand): Map<Int, Int> {

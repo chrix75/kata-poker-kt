@@ -1,6 +1,8 @@
 package kata.poker.ranking
 
 import kata.poker.Hand
+import kata.poker.ranking.randkedhand.RankedHand
+import kata.poker.ranking.randkedhand.RankedTwoPairs
 
 class TwoPairsCardRanking : CardRanking(20) {
     override fun rankedHand(hand: Hand): RankedHand? {

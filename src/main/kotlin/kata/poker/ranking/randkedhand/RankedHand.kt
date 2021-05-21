@@ -1,4 +1,4 @@
-package kata.poker.ranking
+package kata.poker.ranking.randkedhand
 
 abstract class RankedHand(private val level: Int, val rest: List<Int>) {
     abstract fun or(other: RankedHand): RankedHand?

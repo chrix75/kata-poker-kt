@@ -1,4 +1,4 @@
-package kata.poker.ranking
+package kata.poker.ranking.randkedhand
 
 import org.valiktor.functions.hasSize
 import org.valiktor.validate

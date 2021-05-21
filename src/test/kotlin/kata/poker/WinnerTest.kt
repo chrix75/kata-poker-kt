@@ -1,10 +1,7 @@
 package kata.poker
 
 import kata.poker.Suit.*
-import kata.poker.ranking.CardRanking
-import kata.poker.ranking.HighCardRanking
-import kata.poker.ranking.PairCardRanking
-import kata.poker.ranking.TwoPairsCardRanking
+import kata.poker.ranking.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
@@ -15,7 +12,13 @@ class WinnerTest {
 
     @BeforeEach
     internal fun setUp() {
-        cardRankings = listOf(TwoPairsCardRanking(), PairCardRanking(), HighCardRanking())
+        cardRankings = listOf(
+            StraightCardRanking(),
+            ThreeOfKindCardRanking(),
+            TwoPairsCardRanking(),
+            PairCardRanking(),
+            HighCardRanking()
+        )
     }
 
     @Test
@@ -70,6 +73,78 @@ class WinnerTest {
 
         val referee = Referee(cardRankings)
         assertEquals(twoPairsCardHand, referee.chosenWinner(twoPairsCardHand, onePairCardHand))
+    }
+
+    @Test
+    internal fun `three of kind beat two pairs`() {
+        val twoPairsCardHand = Hand().with(Card(10, SPADE))
+            .with(Card(10, CLUB))
+            .with(Card(2, CLUB))
+            .with(Card(2, DIAMOND))
+            .with(Card(7, CLUB))
+
+        val threeOfKindCardHand = Hand().with(Card(10, SPADE))
+            .with(JackCard(CLUB))
+            .with(Card(10, DIAMOND))
+            .with(Card(10, HEART))
+            .with(JackCard(HEART))
+
+        val referee = Referee(cardRankings)
+        assertEquals(threeOfKindCardHand, referee.chosenWinner(twoPairsCardHand, threeOfKindCardHand))
+    }
+
+    @Test
+    internal fun `the best three of kind wins`() {
+        val threeJackCardHand = Hand().with(JackCard(SPADE))
+            .with(JackCard(CLUB))
+            .with(Card(2, CLUB))
+            .with(JackCard(HEART))
+            .with(Card(7, CLUB))
+
+        val threeTenCardHand = Hand().with(Card(10, SPADE))
+            .with(JackCard(CLUB))
+            .with(Card(10, DIAMOND))
+            .with(Card(10, HEART))
+            .with(JackCard(HEART))
+
+        val referee = Referee(cardRankings)
+        assertEquals(threeJackCardHand, referee.chosenWinner(threeJackCardHand, threeTenCardHand))
+    }
+
+    @Test
+    internal fun `the straight beats three of kind`() {
+        val threeJackCardHand = Hand().with(JackCard(SPADE))
+            .with(JackCard(CLUB))
+            .with(Card(2, CLUB))
+            .with(JackCard(HEART))
+            .with(Card(7, CLUB))
+
+        val straightHand = Hand().with(Card(7, CLUB))
+            .with(Card(8, HEART))
+            .with(Card(9, SPADE))
+            .with(Card(10, DIAMOND))
+            .with(JackCard(CLUB))
+
+        val referee = Referee(cardRankings)
+        assertEquals(straightHand, referee.chosenWinner(threeJackCardHand, straightHand))
+    }
+
+    @Test
+    internal fun `the straight with the strongest card wins`() {
+        val otherStraightHand = Hand().with(Card(8, CLUB))
+            .with(Card(9, HEART))
+            .with(Card(10, SPADE))
+            .with(JackCard(CLUB))
+            .with(QueenCard(CLUB))
+
+        val straightHand = Hand().with(Card(7, CLUB))
+            .with(Card(8, HEART))
+            .with(Card(9, SPADE))
+            .with(Card(10, DIAMOND))
+            .with(JackCard(CLUB))
+
+        val referee = Referee(cardRankings)
+        assertEquals(otherStraightHand, referee.chosenWinner(otherStraightHand, straightHand))
     }
 
     @Test

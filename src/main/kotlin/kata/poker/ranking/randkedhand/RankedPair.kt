@@ -1,4 +1,4 @@
-package kata.poker.ranking
+package kata.poker.ranking.randkedhand
 
 class RankedPair(level: Int, private val pair: Int, rest: List<Int>) : RankedHand(level, rest) {
     override fun or(other: RankedHand): RankedHand? {
